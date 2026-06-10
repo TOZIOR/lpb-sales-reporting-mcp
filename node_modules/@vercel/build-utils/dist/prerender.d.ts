@@ -1,0 +1,60 @@
+import type { File, HasField, Chain } from './types';
+import { Lambda } from './lambda';
+interface PrerenderOptions {
+    expiration: number | false;
+    staleExpiration?: number;
+    lambda?: Lambda;
+    fallback: File | null;
+    group?: number;
+    bypassToken?: string | null;
+    allowQuery?: string[];
+    allowHeader?: string[];
+    initialHeaders?: Record<string, string>;
+    initialStatus?: number;
+    passQuery?: boolean;
+    sourcePath?: string;
+    experimentalBypassFor?: HasField;
+    experimentalStreamingLambdaPath?: string;
+    chain?: Chain;
+    exposeErrBody?: boolean;
+    partialFallback?: boolean;
+    hasPostponed?: boolean;
+}
+export declare class Prerender {
+    type: 'Prerender';
+    /**
+     * `expiration` is `revalidate` in Next.js terms, and `s-maxage` in
+     * `cache-control` terms.
+     */
+    expiration: number | false;
+    /**
+     * `staleExpiration` is `expire` in Next.js terms, and
+     * `stale-while-revalidate` + `s-maxage` in `cache-control` terms. It's
+     * expected to be undefined if `expiration` is `false`.
+     */
+    staleExpiration?: number;
+    lambda?: Lambda;
+    fallback: File | null;
+    group?: number;
+    bypassToken: string | null;
+    allowQuery?: string[];
+    allowHeader?: string[];
+    initialHeaders?: Record<string, string>;
+    initialStatus?: number;
+    passQuery?: boolean;
+    sourcePath?: string;
+    experimentalBypassFor?: HasField;
+    experimentalStreamingLambdaPath?: string;
+    chain?: Chain;
+    exposeErrBody?: boolean;
+    partialFallback?: boolean;
+    /**
+     * Set to `true` when the route's `.meta` postponed state is present (React
+     * suspended during build prerender). `false` when the framework prerendered
+     * a Prerender route without postponing. `undefined` when the framework did
+     * not provide the signal.
+     */
+    hasPostponed?: boolean;
+    constructor({ expiration, staleExpiration, lambda, fallback, group, bypassToken, allowQuery, allowHeader, initialHeaders, initialStatus, passQuery, sourcePath, experimentalBypassFor, experimentalStreamingLambdaPath, chain, exposeErrBody, partialFallback, hasPostponed, }: PrerenderOptions);
+}
+export {};

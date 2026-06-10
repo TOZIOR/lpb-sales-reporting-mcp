@@ -1,0 +1,19 @@
+{
+  "name": "lpb-sales-reporting-mcp",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vercel dev",
+    "start": "vercel dev"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "latest",
+    "@supabase/supabase-js": "latest",
+    "zod": "latest"
+  },
+  "devDependencies": {
+    "@types/node": "^25.9.2",
+    "typescript": "latest",
+    "vercel": "latest"
+  }
+}
