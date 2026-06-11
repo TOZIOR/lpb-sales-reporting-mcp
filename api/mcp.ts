@@ -205,6 +205,10 @@ function createServer() {
 }
 
 export default async function handler(req: any, res: any) {
+console.log("METHOD:", req.method);
+console.log("HEADERS:", JSON.stringify(req.headers, null, 2));
+console.log("BODY:", JSON.stringify(req.body, null, 2));
+
   if (req.method !== "POST") {
     return res.status(405).json({ error: "Method not allowed" });
   }
