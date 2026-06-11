@@ -9,6 +9,7 @@
   "dependencies": {
     "@modelcontextprotocol/sdk": "latest",
     "@supabase/supabase-js": "latest",
+    "resend": "^6.12.4",
     "zod": "latest"
   },
   "devDependencies": {
