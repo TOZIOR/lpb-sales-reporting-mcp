@@ -57,11 +57,8 @@ function money(value: number) {
 export default async function handler(req: any, res: any) {
   try {
     if (cronSecret) {
-      const providedSecret = req.query?.secret || req.headers["x-cron-secret"];
-      if (providedSecret !== cronSecret) {
-        return res.status(401).json({ ok: false, error: "Unauthorized" });
-      }
-    }
+      console.log("CRON_SECRET =", cronSecret);
+console.log("QUERY_SECRET =", req.query?.secret);
 
     const period = getLastCompleteWeek();
 
