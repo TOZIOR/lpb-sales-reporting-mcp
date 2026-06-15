@@ -69,11 +69,14 @@ export default async function handler(req: any, res: any) {
     const period = getLastCompleteWeek();
 
     const { data, error } = await supabase.rpc("get_sales_by_product", {
-      p_start_date: period.start_date,
-      p_end_date: period.end_date,
-    });
+  p_start_date: period.start_date,
+  p_end_date: period.end_date,
+});
 
-    if (error) throw new Error(error.message);
+if (error) {
+  console.error("SUPABASE RPC ERROR", JSON.stringify(error, null, 2));
+  throw new Error(`Supabase RPC error: ${error.message}`);
+}
 
     const products = data ?? [];
 
