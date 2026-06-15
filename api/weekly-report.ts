@@ -1,5 +1,4 @@
 import { createClient } from "@supabase/supabase-js";
-import { Resend } from "resend";
 
 const supabaseUrl = process.env.SUPABASE_URL;
 const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
@@ -13,7 +12,7 @@ if (!resendApiKey) throw new Error("Missing RESEND_API_KEY");
 if (!reportEmailTo) throw new Error("Missing REPORT_EMAIL_TO");
 
 const supabase = createClient(supabaseUrl, supabaseKey);
-const resend = new Resend(resendApiKey);
+
 
 function isoDate(d: Date) {
   return d.toISOString().slice(0, 10);
@@ -113,18 +112,31 @@ export default async function handler(req: any, res: any) {
       <p>Le CSV détaillé par produit est joint à cet email.</p>
     `;
 
-    const result = await resend.emails.send({
-      from: "LPB Reporting <onboarding@resend.dev>",
-      to: reportEmailTo,
-      subject,
-      html,
-      attachments: [
-        {
-          filename: `reporting_ventes_${period.start_date}_${period.end_date}.csv`,
-          content: Buffer.from(csv, "utf-8").toString("base64"),
-        },
-      ],
-    });
+    const resendResponse = await fetch("https://api.resend.com/emails", {
+  method: "POST",
+  headers: {
+    Authorization: `Bearer ${resendApiKey}`,
+    "Content-Type": "application/json",
+  },
+  body: JSON.stringify({
+    from: "LPB Reporting <onboarding@resend.dev>",
+    to: [reportEmailTo],
+    subject,
+    html,
+    attachments: [
+      {
+        filename: `reporting_ventes_${period.start_date}_${period.end_date}.csv`,
+        content: Buffer.from(csv, "utf-8").toString("base64"),
+      },
+    ],
+  }),
+});
+
+const result = await resendResponse.json();
+
+if (!resendResponse.ok) {
+  throw new Error(JSON.stringify(result));
+}
 
     return res.status(200).json({
       ok: true,
