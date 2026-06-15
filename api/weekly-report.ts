@@ -74,8 +74,7 @@ export default async function handler(req: any, res: any) {
 });
 
 if (error) {
-  console.error("SUPABASE RPC ERROR", JSON.stringify(error, null, 2));
-  throw new Error(`Supabase RPC error: ${error.message}`);
+    throw new Error(`Supabase RPC error: ${error.message}`);
 }
 
     const products = data ?? [];

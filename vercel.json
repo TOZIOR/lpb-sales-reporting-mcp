@@ -1,7 +1,8 @@
 {
-  "functions": {
-    "api/mcp.ts": {
-      "maxDuration": 60
+  "crons": [
+    {
+      "path": "/api/weekly-report?secret=lpbcron123",
+      "schedule": "0 7 * * 1"
     }
-  }
+  ]
 }
