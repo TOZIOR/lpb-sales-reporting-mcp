@@ -2,7 +2,7 @@
   "crons": [
     {
       "path": "/api/weekly-report?secret=lpbcron123",
-      "schedule": "0 7 * * 1"
+      "schedule": "30 4 * * 1"
     }
   ]
 }
