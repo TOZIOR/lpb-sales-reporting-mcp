@@ -1,9 +1,11 @@
 const supabaseUrl = process.env.SUPABASE_URL;
 const cronSecret = process.env.CRON_SECRET;
+const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
 const syncFunctionUrl =
   "https://aawucxidggmkpdcyhlpc.supabase.co/functions/v1/sync-pennylane-sales-reporting";
 
 if (!supabaseUrl) throw new Error("Missing SUPABASE_URL");
+if (!supabaseKey) throw new Error("Missing SUPABASE_SERVICE_ROLE_KEY");
 if (!cronSecret) throw new Error("Missing CRON_SECRET");
 
 function isoDate(d: Date) {
@@ -42,9 +44,10 @@ export default async function handler(req: any, res: any) {
 
     const syncResponse = await fetch(syncFunctionUrl, {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
+     headers: {
+  "Content-Type": "application/json",
+  Authorization: `Bearer ${supabaseKey}`,
+},
       body: JSON.stringify({
         startDate: period.startDate,
         endDate: period.endDate,
